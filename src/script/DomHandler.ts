@@ -1,4 +1,4 @@
-export default class DomManipulator {
+export default class DomHandler {
     public createElement(elementName: string): HTMLElement{
         return document.createElement(elementName);
     }

@@ -17,7 +17,7 @@ export class AccountModel {
         this.accounts.map(account => {
             const fullName = account.name + account.surname;
 
-            if (fullName.toLocaleUpperCase().includes(name)) {
+            if (fullName.toLowerCase().includes(name)) {
                 queryResult.push(account);
             }
         })
@@ -41,10 +41,5 @@ export class AccountModel {
         const accountIndex = this.accounts.findIndex(account => account.id === id);
 
         this.accounts[accountIndex] = body;
-    }
-
-    
-
-
-    
+    }    
 }
