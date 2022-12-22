@@ -4,7 +4,7 @@
     background-color: $dark-grey;
 
     &__title {
-        @include text-format($size: 4rem, $color: $creamy-brown);
+        @include text-format(4rem, $color: $creamy-brown);
     }
 
     &__description {
@@ -13,7 +13,7 @@
     }
 
     &__icon {
-        @include size($width: 3.5rem, $height: 3.5rem);
+        @include size(3.5rem, 3.5rem);
         margin: 1rem;
 
         border-radius: 50%;

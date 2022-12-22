@@ -1,10 +1,10 @@
 .main {
-    @include flex($direction: row);
+    @include flex(row);
 
     width: 95%;
     margin: 5rem auto;
 
     @include screen-for($tablet) {
-        @include flex($direction: column);
+        @include flex(column);
     }
 }

@@ -4,6 +4,6 @@
     background-color: $creamy-brown;
     
     &__title {
-        @include text-format($size: 3rem, $text-align: center);
+        @include text-format(3rem, $text-align: center);
     }
 }

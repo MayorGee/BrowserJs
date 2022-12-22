@@ -1,6 +1,6 @@
 .account {
     &__avatar {
-        @include size($width: 20rem, $height: 20rem);
+        @include size(20rem, 20rem);
 
         display: block;
         margin: 0 auto;

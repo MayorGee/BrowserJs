@@ -1,11 +1,11 @@
 .footer-nav {
-    @include flex($direction: row, $justify-content: space-between, $align-items: center);
+    @include flex(row, $justify-content: space-between, $align-items: center);
 
     width: 98%;
     margin: auto;
 
     &__list {
-        @include flex($direction: row);
+        @include flex(row);
 
         list-style-type: none;
     }
