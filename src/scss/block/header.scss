@@ -1,0 +1,8 @@
+.header {
+    height: 6rem;
+    background-color: $creamy-brown;
+    
+    &__title {
+        @include text-format($size: 3rem, $text-align: center);
+    }
+}

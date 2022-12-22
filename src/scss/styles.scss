@@ -1,0 +1,18 @@
+@import './variables/breakpoints.scss';
+@import './mixins/breakpoints.scss';
+@import './mixins/common.scss';
+
+@import './variables/colors.scss';
+
+@import './block/header.scss';
+
+@import './block/main.scss';
+@import './block/form.scss';
+@import './block/accounts.scss';
+
+@import './block/footer.scss';
+@import './block/footer-icons.scss';
+@import './block/footer-nav.scss';
+
+@import './main-styles.scss';
+@import './reset.scss';

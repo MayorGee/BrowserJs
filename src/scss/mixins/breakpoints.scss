@@ -1,0 +1,19 @@
+@mixin screen-for($max-width) {
+    $max-width: $max-width - 1px;
+    @media (max-width: $max-width) {
+        @content;
+    }
+}
+
+@mixin screen-including($min-width, $max-width) {
+    $max-width: $max-width - 1px;
+    @media (min-width: $min-width) and (max-width: $max-width) {
+        @content;
+    }
+}
+
+@mixin screen-bigger-than($min-width) {
+    @media (min-width: $min-width) {
+        @content;
+    }
+}

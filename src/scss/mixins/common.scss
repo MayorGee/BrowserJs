@@ -1,0 +1,52 @@
+@mixin flex(
+    $direction: row,
+    $wrap: nowrap,
+    $justify-content: flex-start,
+    $align-items: stretch, 
+    $column-gap: null,
+    $row-gap: null,
+    $gap: null
+) {
+    display: flex;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    column-gap: $column-gap;
+    row-gap: $row-gap;
+    gap: $gap;
+}
+
+@mixin size(
+    $width: null, 
+    $height: null,
+    $max-width: null,
+    $min-width: null,
+    $max-height: null,
+    $min-height: null
+){
+    width: $width;
+    height: $height;
+    max-height: $max-height;
+    min-height: $min-height;
+    max-width: $max-width;
+    min-width: $min-width;
+}
+
+@mixin text-format(
+    $family: 'Open Sans', 
+    $size: null, 
+    $weight: null,
+    $line-height: null,
+    $text-align: null,
+    $color: null,
+    $text-decoration: null
+) {
+    font-family: $family;
+    font-size: $size;
+    font-weight: $weight;
+    line-height: $line-height;
+    text-align: $text-align;
+    text-decoration: $text-decoration;
+    color: $color;
+}

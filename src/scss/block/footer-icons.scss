@@ -1,0 +1,5 @@
+.footer-icons {
+    @include flex($direction: row, $justify-content: center);
+
+    margin: 0 auto;
+}

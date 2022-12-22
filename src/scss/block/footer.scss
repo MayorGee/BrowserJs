@@ -1,0 +1,22 @@
+.footer {
+    @include size($height: 30rem);
+
+    background-color: rgb(66, 64, 64);
+    @include text-format($color: $white, $text-align: center);
+
+    &__title {
+        @include text-format($size: 4rem, $color: $creamy-brown);
+    }
+
+    &__description {
+        @include size($width: 40%);
+        margin: auto;
+    }
+
+    &__icon {
+        @include size($width: 3.5rem, $height: 3.5rem);
+        margin: 1rem;
+
+        border-radius: 50%;
+    }
+}

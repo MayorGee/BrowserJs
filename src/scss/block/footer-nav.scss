@@ -1,0 +1,20 @@
+.footer-nav {
+    @include flex($direction: row, $justify-content: space-between, $align-items: center);
+
+    width: 98%;
+    margin: auto;
+
+    &__list {
+        @include flex($direction: row);
+
+        list-style-type: none;
+    }
+
+    &__list-item {
+        margin-right: 1.5rem;
+    }
+
+    &__link {
+        @include text-format($color: $creamy-brown, $text-decoration: none);
+    }
+}

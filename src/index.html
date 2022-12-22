@@ -1,22 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="styles/styles.css" type="text/css"  rel="stylesheet"/>
-    <title>Account Manager</title>
-</head>
-<body>
-    <header class="header js-header">
-    </header>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link href="css/styles.css" type="text/css"  rel="stylesheet"/>
+            <title>Account Manager</title>
+        </head>
+        
+        <body>
+            <header class="header">
+                <h1 class="header__title">
+                    Account Manager
+                </h1>
+            </header>
+        
+            <main class="main js-main">
+                <div class="accounts">
+                    <div class="accounts__search">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            name="searchInput"
+                            class="main__input"
+                            placeholder="Type name, surname, or tag(s)"
+                        />
+                        <button class="main__button">Search</button>
+                    </div>
 
-    <main class="main js-main">
-    </main>
+                    <ul class="accounts__list js-account-list">
+                       
+                    </ul>
+                    
+                </div>
 
-    <footer class="footer js-footer">
+                <form 
+                    action="/add-account"
+                    method="post"
+                    class="form"
+                >
+                    <p class="form__info">
+                        Fill in the following details to add account
+                    </p>
+        
+                    <div class="form__item">
+                        <label 
+                            for="account_first_name" 
+                            class="form__label"
+                        >
+                            First Name:
+                        </label>
+                        <br />
+                        <input 
+                            type="text" 
+                            id="account_first_name" 
+                            name="firstName"
+                            class="main__input"
+                        />
+                    </div>
+                
+                    <div class="form__item">
+                        <label 
+                            for="account_last_name" 
+                            class="form__label"
+                        >
+                            Last Name:
+                        </label>
+                        <br />
+                        <input 
+                            type="text" 
+                            id="account_last_name" 
+                            name="lastName"
+                            class="main__input"
+                        />
+                    </div>
 
-    </footer>
-    <script src="./index.js"></script>
-</body>
-</html>
+                    <div class="form__item">
+                        <label 
+                            for="account_avatar" 
+                            class="form__label"
+                        >
+                            Avatar:
+                        </label>
+                        <br />
+                        <input 
+                            type="file" 
+                            id="account_avatar" 
+                            name="avatar"
+                            class="main__input" 
+                        />
+                    </div>
+                
+                    <div class="form__item">
+                        <label 
+                            for="account_tag" 
+                            class="form__label"
+                        >
+                            Tag:
+                        </label>
+                        <br />
+                        <input 
+                            type="text" 
+                            id="account_tag" 
+                            name="tag"
+                            class="main__input" 
+                        />
+                    </div>
+
+                    <div class="form__item">
+                        <button 
+                            type="submit" 
+                            class="main__button"
+                        >
+                            Add Account
+                        </button>
+                    </div>
+                </form>
+            </main>
+        
+            <footer class="footer">
+                <h1 class="footer__title">Account Management Plc</h1>
+                <p class="footer__description">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                    Officiis aperiam dolor atque ut voluptas minus 
+                    Necessitatibus corrupti hic velit doloremque officia facere 
+                    distinctio odio consectetur vel, ut impedit nihil doloribus.
+                </p>
+        
+                <div class="footer-icons">
+                    <a href="" class="footer__link">
+                        <img 
+                            src="./icons/fb-logo.svg" 
+                            alt="fb icon"
+                            class="footer__icon" 
+                        />
+                    </a>
+                    <a href="" class="footer__link">
+                        <img 
+                            src="./icons/instagram-logo.svg" 
+                            alt="instagram icon" 
+                            class="footer__icon" 
+                        />
+                    </a>
+                    <a href="" class="footer__link">
+                        <img 
+                            src="./icons/whatsapp-logo.svg" 
+                            alt="whatsapp icon" 
+                            class="footer__icon" 
+                        />
+                    </a>
+                    <a href="" class="footer__link">
+                        <img 
+                            src="./icons/linkedIn-logo.svg" 
+                            alt="linkedIn icon" 
+                            class="footer__icon" 
+                        />
+                    </a>                 
+                </div>
+        
+                <div class="footer-nav">
+                    <a href="" class="footer-nav__link">AccManager</a>
+                    <ul class="footer-nav__list">
+                        <li class="footer-nav__list-item">
+                            <a href="" class="footer-nav__link">Home</a>
+                        </li>
+                        <li class="footer-nav__list-item">
+                            <a href="" class="footer-nav__link">About</a>
+                        </li>
+                        <li class="footer-nav__list-item">
+                            <a href="" class="footer-nav__link">Contact</a>
+                        </li>
+                        <li class="footer-nav__list-item">
+                            <a href="" class="footer-nav__link">Blog</a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+
+            <script type="module" src="./index.js"></script>
+        </body>
+    </html>

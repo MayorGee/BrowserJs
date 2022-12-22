@@ -1,4 +1,4 @@
-import { Account } from "../abstracts/common";
+import { Account, getFullName } from '../abstracts/common';
 
 export class AccountModel {
     private accounts: Account[] = [];
@@ -7,26 +7,24 @@ export class AccountModel {
         this.accounts = accounts;
     }
 
-    public getAccountById(id: number) {
-        return this.accounts.filter(account => account.id === id);
+    public getAccountById(id: number): Account {
+        return this.accounts.filter(account => account.id === id)[0];
     }
 
-    public getAccountByName(name: string) {
-        const queryResult: Account[] = [];
-        
-        this.accounts.map(account => {
-            const fullName = account.name + account.surname;
+    public getAccountsByName(name: string): Account[] {
+        const queryResult = this.accounts.filter(account => {
+            const fullName = getFullName(account.name, account.surname);
 
             if (fullName.toLowerCase().includes(name)) {
-                queryResult.push(account);
+                return account;
             }
         })
 
         return queryResult;
     }
 
-    public getAccountByTag(tag: string) {
-        return this.accounts.filter(account => account.tag === tag);
+    public getAccountByTag(tag: string): Account {
+        return this.accounts.filter(account => account.tag === tag)[0];
     }
 
     public addAccount(account: Account) {

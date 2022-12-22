@@ -30,6 +30,11 @@ function html() {
         .pipe(dest('dist/'));
 }
 
+function icon() {
+    return src('./src/icons/*.svg')
+        .pipe(dest('dist/icons'));
+}
+
 function script() {
     return src('./src/**/*.js')
         .pipe(dest('dist/'));
@@ -47,6 +52,7 @@ function clear() {
 
 function serve() {
     watch('./src/**/**.html', series(html)).on('change', sync.reload);
+    watch('./src/icons/**.svg', series(icon)).on('change', sync.reload);
     watch('./src/scss/**.scss', series(scss)).on('change', sync.reload);
     watch('./src/**/**.js', series(script)).on('change', sync.reload);
     watch('./src/**/**.ts', series(typescript)).on('change', sync.reload);
@@ -63,7 +69,8 @@ export const watchNode = parallel(
     startBrowserSync,
     series(
         clear, 
-        html,  
+        html,
+        icon,  
         scss,
         script,
         typescript,
