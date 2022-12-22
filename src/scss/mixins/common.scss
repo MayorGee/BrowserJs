@@ -34,7 +34,6 @@
 }
 
 @mixin text-format(
-    $family: 'Open Sans', 
     $size: null, 
     $weight: null,
     $line-height: null,
@@ -42,7 +41,6 @@
     $color: null,
     $text-decoration: null
 ) {
-    font-family: $family;
     font-size: $size;
     font-weight: $weight;
     line-height: $line-height;

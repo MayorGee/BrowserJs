@@ -1,38 +1,16 @@
-import { Account, ButtonMaterial, getFullName, ImageMaterial, } from '../abstracts/common.js';
+import { ButtonAttributes, ImageAttributes, } from '../abstracts/common.js';
 
 export default class DomManipulator {
     public createElement<T>(elementName: string): T {
         return document.createElement(elementName) as unknown as T;
     }
-    
-    public createListItems(accounts: Account[], className: string): HTMLUListElement[] {
-        let listItems = accounts.map(account => {
-            const listItem = this.createElement<HTMLUListElement>('li');
-            const paragraph = this.createElement<HTMLParagraphElement>('p');
-            const fullName = getFullName(account.name, account.surname);
-            
-            const currentImage = this.createImgElement({
-                src: account.avatar,
-                alt: 'account avatar',
-                className: 'accounts__avatar'
-            });
 
-            this.addClassName(listItem, className);
-            this.appendInnerHtml(paragraph, fullName);
-            this.appendInnerHtml<HTMLImageElement | HTMLParagraphElement>(listItem, currentImage.outerHTML, paragraph.outerHTML);
-
-            return listItem;
-        })
-
-        return listItems;
-    }
-
-    public createButtons(...buttonMaterials: ButtonMaterial[]) {
-        const buttons = buttonMaterials.map(buttonMaterial => {
+    public createButtons(...buttonAttributes: ButtonAttributes[]) {
+        const buttons = buttonAttributes.map(buttonAttribute => {
             const button = this.createElement<HTMLButtonElement>('button');
 
-            this.addClassName(button, buttonMaterial.className); 
-            this.appendInnerHtml(button, buttonMaterial.innerHtml);
+            this.addClassName(button, buttonAttribute.className); 
+            this.appendInnerHtml(button, buttonAttribute.innerHtml);
 
             return button;
         })
@@ -46,12 +24,12 @@ export default class DomManipulator {
         });
     }
 
-    public createImgElement(imageMaterial: ImageMaterial) {
+    public createImgElement(imageAttributes: ImageAttributes) {
         const newImage = this.createElement<HTMLImageElement>('img');
 
-        newImage.src = imageMaterial.src;
-        newImage.alt = imageMaterial.alt;
-        this.addClassName(newImage, imageMaterial.className);
+        newImage.src = imageAttributes.src;
+        newImage.alt = imageAttributes.alt;
+        this.addClassName(newImage, imageAttributes.className);
 
         return newImage;
     }

@@ -1,0 +1,10 @@
+.main-button{
+    @include text-format($color: $black, $weight: 700);
+        
+    padding: 1rem 2rem;
+
+
+    background-color: $creamy-brown;
+    border: none;
+    border-radius: 1rem;
+}

@@ -1,15 +1,14 @@
 .footer {
-    @include size($height: 30rem);
-
-    background-color: rgb(66, 64, 64);
     @include text-format($color: $white, $text-align: center);
+    
+    background-color: $dark-grey;
 
     &__title {
         @include text-format($size: 4rem, $color: $creamy-brown);
     }
 
     &__description {
-        @include size($width: 40%);
+        width: 40%;
         margin: auto;
     }
 

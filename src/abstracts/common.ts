@@ -6,18 +6,14 @@ export interface Account {
     tag: string
 }
 
-export interface ButtonMaterial {
+export interface ButtonAttributes {
     innerHtml: string,
     className: string,
     onClink?: Function
 }
 
-export interface ImageMaterial {
+export interface ImageAttributes {
     src: string,
     alt: string,
     className: string
-}
-
-export const getFullName = (name: string, surname: string): string => {
-    return name + ' ' + surname;
 }

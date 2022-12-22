@@ -1,0 +1,13 @@
+.main-input {
+    @include size($width: 25rem, $height: 4.5rem);
+        
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+
+    color: $white;
+
+    background-color: $black;
+    border: 1px solid $creamy-brown;
+    border-radius: 1rem;
+    outline: 1px solid $less-faint-creamy-brown;
+}
