@@ -1,27 +1,14 @@
-import { Account } from '../abstracts/common.js';
-import { AccountModel } from './AccountModel.js';
-import DomManipulator from './DomManipulator.js';
+import { IAccount } from '../abstracts/common.js';
+import Account from './Account.js';
 
-export default class AccountView {
-    private domManipulator;
-    private accounts: Account[];
+export default class AccountView extends Account {
+    protected accountsToDisplay: IAccount[] = [];
 
-    constructor(dummyData: Account[]) {
-        this.domManipulator = new DomManipulator;
-        this.accounts = dummyData;
-    }
-
-    public makePage() {
-        const accountList = this.domManipulator.getElementByClassName('js-account-list');
-        
-        if (!accountList) {
-            throw new Error('Account List Undefined');
-        }
-
-        const [editButton, deleteButton] = this.domManipulator.createButtons(
+    public makeAccountsList() { 
+        const [updateButton, deleteButton] = this.domManipulator.createButtons(
             {
                 innerHtml: 'Edit',
-                className: 'account__edit-button'
+                className: 'account__update-button'
             },
             {
                 innerHtml: 'Delete',
@@ -29,18 +16,39 @@ export default class AccountView {
             }
         );
 
-        const listItems = this.createListItems(this.accounts, 'account__list-item');
+        const listItems = this.createListItems('account__list-item');
 
-        this.domManipulator.appendActionButtons<HTMLUListElement>(listItems, editButton, deleteButton);
-
-        this.domManipulator.appendElements(accountList, listItems);
+        this.domManipulator.appendActionButtons<HTMLUListElement>(listItems, updateButton, deleteButton);
+        this.addAccountToDom(listItems);
     }
 
-    private createListItems(accounts: Account[], className: string): HTMLUListElement[] {
-        const listItems = accounts.map(account => {
-            const listItem = this.domManipulator.createElement<HTMLUListElement>('li');
-            const paragraph = this.domManipulator.createElement<HTMLParagraphElement>('p');
-            const fullName = AccountModel.getFullName(account.name, account.surname);
+    public hideUpdateForm() {
+        const updateForm = this.domManipulator.getElementByClassName('js-update-form') as HTMLFormElement;
+        updateForm.style.display = 'none';
+    }
+
+    private decideAccountsToDisplay() {
+        this.accountsToDisplay = Account.filteredAccounts.length > 0 ?
+                                 Account.filteredAccounts :
+                                 Account.accounts;
+    }
+
+    private addAccountToDom(listItems: HTMLUListElement[]) {
+        this.domManipulator.appendElements(Account.accountList, listItems);
+    }
+
+    public clearAccountList() {
+        Account.accountList.innerHTML = '';
+    }
+
+    private createListItems(className: string): HTMLUListElement[] {
+        this.decideAccountsToDisplay();
+
+        const listItems = this.accountsToDisplay.map(account => {
+            const [listItem, paragraph, span] = this.domManipulator.createElements<HTMLElement>('li', 'p', 'span');
+            span.style.display = 'none';
+
+            const fullName = this.getFullName(account.firstName, account.lastName);
             
             const currentImage = this.domManipulator.createImgElement({
                 src: account.avatar,
@@ -50,11 +58,17 @@ export default class AccountView {
 
             this.domManipulator.addClassName(listItem, className);
             this.domManipulator.appendInnerHtml(paragraph, fullName);
-            this.domManipulator.appendInnerHtml<HTMLImageElement | HTMLParagraphElement>(listItem, currentImage.outerHTML, paragraph.outerHTML);
-
+            this.domManipulator.appendInnerHtml(span, account.tag, ' ', account.id);
+            this.domManipulator.appendInnerHtml<HTMLImageElement | HTMLParagraphElement | HTMLElement>(
+                listItem, 
+                currentImage.outerHTML, 
+                paragraph.outerHTML, 
+                span.outerHTML
+            );
+            
             return listItem;
         })
 
-        return listItems;
+        return listItems as HTMLUListElement[];
     }
 }

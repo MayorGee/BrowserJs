@@ -1,0 +1,10 @@
+.forms {
+    @include flex($justify-content: space-evenly);
+    @include size(80%);
+
+    @include screen-for($mobile) {
+        @include flex(column);
+    }
+
+    margin: 0 auto;
+}

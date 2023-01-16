@@ -1,9 +1,11 @@
 .accounts {
     @include flex(column, $align-items: center);
     
-    @include size(75%, $max-height: 60rem);
+    @include size(80%, $max-height: 60rem);
     
     overflow-y: scroll;
+    
+    margin: 1rem auto;
     padding: 2rem 1rem;    
 
     color: $white;

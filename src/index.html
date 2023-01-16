@@ -18,14 +18,28 @@
             <main class="main js-main">
                 <div class="accounts">
                     <div class="accounts__search">
+                        <select 
+                            name="tags" 
+                            id="tags"
+                            class="main-input js-select-tag"
+                        >
+                            <option 
+                                value="" 
+                                selected=true 
+                            >
+                                None
+                            </option>
+                            <option value="Friend">Friend</option>
+                            <option value="Relative">Relative</option>
+                            <option value="Colleague">Colleague</option>
+                        </select>
                         <input 
                             type="text" 
                             id="searchInput" 
                             name="searchInput"
-                            class="main-input"
+                            class="main-input js-search-input"
                             placeholder="Type name, surname, or tag(s)"
                         />
-                        <button class="main-button">Search</button>
                     </div>
 
                     <ul class="accounts__list js-account-list">
@@ -34,88 +48,183 @@
                     
                 </div>
 
-                <form 
-                    action="/add-account"
-                    method="post"
-                    class="form"
-                >
-                    <p class="form__info">
-                        Fill in the following details to add account
-                    </p>
+                <div class="forms">
+                    <form class="form js-add-form">
+                        <p class="form__info">
+                            Fill in the following details to add account
+                        </p>
+            
+                        <div class="form__item">
+                            <label 
+                                for="account_first_name" 
+                                class="form__label"
+                            >
+                                First Name:
+                            </label>
+                            <br />
+                            <input 
+                                type="text" 
+                                id="account_first_name" 
+                                name="firstName"
+                                class="main-input"
+                            />
+                        </div>
+                    
+                        <div class="form__item">
+                            <label 
+                                for="account_last_name" 
+                                class="form__label"
+                            >
+                                Last Name:
+                            </label>
+                            <br />
+                            <input 
+                                type="text" 
+                                id="account_last_name" 
+                                name="lastName"
+                                class="main-input"
+                            />
+                        </div>
+    
+                        <div class="form__item">
+                            <label 
+                                for="account_avatar" 
+                                class="form__label"
+                            >
+                                Avatar:
+                            </label>
+                            <br />
+                            <input 
+                                type="text"
+                                id="account_avatar" 
+                                name="avatar"
+                                class="main-input" 
+                            />
+                        </div>
+                    
+                        <div class="form__item">
+                            <label 
+                                for="account_tag" 
+                                class="form__label"
+                            >
+                                Tag:
+                            </label>
+                            <br />
+                            <input 
+                                type="text" 
+                                id="account_tag" 
+                                name="tag"
+                                class="main-input" 
+                            />
+                        </div>
+
+                        <div class="form__item">
+                            <input 
+                                type="hidden" 
+                                id="account_id" 
+                                name="id"
+                                class="main-input" 
+                            />
+                        </div>
+    
+                        <div class="form__item">
+                            <button 
+                                type="submit" 
+                                class="main-button"
+                            >
+                                Add Account
+                            </button>
+                        </div>
+                    </form>
+
+                    <form class="form js-update-form">
+                        <p class="form__info">
+                            Edit account details below and update
+                        </p>
+            
+                        <div class="form__item">
+                            <label 
+                                for="account_first_name" 
+                                class="form__label"
+                            >
+                                First Name:
+                            </label>
+                            <br />
+                            <input 
+                                type="text" 
+                                id="account_first_name" 
+                                name="firstName"
+                                class="main-input"
+                            />
+                        </div>
+                    
+                        <div class="form__item">
+                            <label 
+                                for="account_last_name" 
+                                class="form__label"
+                            >
+                                Last Name:
+                            </label>
+                            <br />
+                            <input 
+                                type="text" 
+                                id="account_last_name" 
+                                name="lastName"
+                                class="main-input"
+                            />
+                        </div>
         
-                    <div class="form__item">
-                        <label 
-                            for="account_first_name" 
-                            class="form__label"
-                        >
-                            First Name:
-                        </label>
-                        <br />
-                        <input 
-                            type="text" 
-                            id="account_first_name" 
-                            name="firstName"
-                            class="main-input"
-                        />
-                    </div>
-                
-                    <div class="form__item">
-                        <label 
-                            for="account_last_name" 
-                            class="form__label"
-                        >
-                            Last Name:
-                        </label>
-                        <br />
-                        <input 
-                            type="text" 
-                            id="account_last_name" 
-                            name="lastName"
-                            class="main-input"
-                        />
-                    </div>
+                        <div class="form__item">
+                            <label 
+                                for="account_avatar" 
+                                class="form__label"
+                            >
+                                Avatar:
+                            </label>
+                            <br />
+                            <input 
+                                type="text"
+                                id="account_avatar" 
+                                name="avatar"
+                                class="main-input" 
+                            />
+                        </div>
+                    
+                        <div class="form__item">
+                            <label 
+                                for="account_tag" 
+                                class="form__label"
+                            >
+                                Tag:
+                            </label>
+                            <br />
+                            <input 
+                                type="text" 
+                                id="account_tag" 
+                                name="tag"
+                                class="main-input" 
+                            />
+                        </div>
 
-                    <div class="form__item">
-                        <label 
-                            for="account_avatar" 
-                            class="form__label"
-                        >
-                            Avatar:
-                        </label>
-                        <br />
-                        <input 
-                            type="file" 
-                            id="account_avatar" 
-                            name="avatar"
-                            class="main-input" 
-                        />
-                    </div>
-                
-                    <div class="form__item">
-                        <label 
-                            for="account_tag" 
-                            class="form__label"
-                        >
-                            Tag:
-                        </label>
-                        <br />
-                        <input 
-                            type="text" 
-                            id="account_tag" 
-                            name="tag"
-                            class="main-input" 
-                        />
-                    </div>
-
-                    <div class="form__item">
-                        <button 
-                            type="submit" 
-                            class="main-button"
-                        >
-                            Add Account
-                        </button>
-                    </div>
-                </form>
+                        <div class="form__item">
+                            <input 
+                                type="hidden" 
+                                id="account_id" 
+                                name="id"
+                                class="main-input" 
+                            />
+                        </div>
+        
+                        <div class="form__item">
+                            <button 
+                                type="submit" 
+                                class="main-button"
+                            >
+                                Update Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </main>
         
             <footer class="footer">

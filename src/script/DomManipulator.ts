@@ -5,18 +5,25 @@ export default class DomManipulator {
         return document.createElement(elementName) as unknown as T;
     }
 
+    public createElements<T extends HTMLElement>(...elementNames: string[]) {
+        const createdElements = elementNames.map(elementName => this.createElement<T>(elementName));
+
+        return createdElements;
+    }
+
     public createButtons(...buttonAttributes: ButtonAttributes[]) {
         const buttons = buttonAttributes.map(buttonAttribute => {
             const button = this.createElement<HTMLButtonElement>('button');
 
             this.addClassName(button, buttonAttribute.className); 
             this.appendInnerHtml(button, buttonAttribute.innerHtml);
-
+            
             return button;
         })
 
         return buttons;       
     }
+
 
     public appendActionButtons<T extends HTMLElement>(elementItems: T[], ...actionButtons: HTMLButtonElement[]) {
         elementItems.forEach(elementItem => {
@@ -60,16 +67,7 @@ export default class DomManipulator {
         })
     }
 
-    public dropElement(id: string) {
-        const selectedElement = document.getElementById(id);
+    public dropElement(selectedElement: HTMLElement | null) {
         selectedElement?.remove();
-    }
-
-    public removeClassName(element: HTMLElement, className: string) {
-        element.classList.remove(className);
-    }
-
-    public removeChild(element: HTMLElement, child: HTMLElement) {
-        element.removeChild(child);
     }   
 }

@@ -1,15 +1,14 @@
-export interface Account {
+export interface IAccount {
     id: number,
-    name: string,
-    surname: string,
+    firstName: string,
+    lastName: string,
     avatar: string,
     tag: string
 }
 
 export interface ButtonAttributes {
     innerHtml: string,
-    className: string,
-    onClink?: Function
+    className: string
 }
 
 export interface ImageAttributes {
