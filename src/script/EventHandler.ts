@@ -38,15 +38,15 @@ export default class EventHandler {
         Account.accountList.addEventListener('click', (ev) => {
             const eventTarget = (ev.target as HTMLElement);
 
-            if(eventTarget.className === 'account__update-button') {
-                updateForm.style.display = 'flex';
-                const accountToUpdate = eventTarget.parentElement as HTMLUListElement;
+            if(eventTarget.className === 'js-account-edit-button') {
+                this.domManipulator.removeClassName(updateForm, 'hide');
+                const accountToUpdate = eventTarget.closest('ul') as HTMLUListElement;
 
                 this.handleAccountUpdate(accountToUpdate, updateForm);
             }
 
-            if(eventTarget.className === 'account__delete-button') {
-                this.domManipulator.dropElement(eventTarget.parentElement);
+            if(eventTarget.className === 'js-account-delete-button') {
+                this.domManipulator.dropElement(eventTarget.closest('ul'));
             }
         });
 
@@ -57,50 +57,40 @@ export default class EventHandler {
     }
 
     private handleAccountUpdate(accountToUpdate: HTMLUListElement, updateForm: HTMLFormElement) {
-        const accountImageSrc = (accountToUpdate.children[0] as HTMLImageElement).currentSrc;
-        const [accountFirstName, accountLastName] = (accountToUpdate.children[1] as HTMLInputElement).innerText.split(' ');
-        const [accountTag, accountId] = (accountToUpdate.children[2] as HTMLSpanElement).innerText.split(' ');
-        
-        const updateFormDivs = Array.from(updateForm.getElementsByTagName('div'));
-        updateFormDivs.pop();
+        const accountImageSrc = (accountToUpdate.querySelector('.js-account-avatar') as HTMLImageElement).currentSrc;
+        const [accountFirstName, accountLastName] = (accountToUpdate.querySelector('.js-account-fullname') as HTMLParagraphElement).innerText.split(' ');
+        const [accountTag, accountId] = (accountToUpdate.querySelector('.js-account-tag') as HTMLSpanElement).innerText.split(' ');
 
-        const updateFormInputs = updateFormDivs.map(updateFormDiv => updateFormDiv.getElementsByTagName('input'));
+        const updateFormInputTags = updateForm.getElementsByClassName('main-input') as unknown as HTMLInputElement[];
 
-        this.updateFormInputs(updateFormInputs, accountFirstName, accountLastName, accountImageSrc, accountTag, accountId);
+        this.updateFormInputs(updateFormInputTags, accountFirstName, accountLastName, accountImageSrc, accountTag, accountId);
     }
 
     private updateFormInputs(
-        updateFormInputs: HTMLCollectionOf<HTMLInputElement>[], 
+        updateFormInputs: HTMLInputElement[], 
         accountFirstName: string, 
         accountLastName: string, 
         accountImageSrc: string, 
         accountTag: string, 
         accountId: string
-        ) {
-        updateFormInputs[0][0].value = accountFirstName;
-        updateFormInputs[1][0].value = accountLastName;
-        updateFormInputs[2][0].value = accountImageSrc;
-        updateFormInputs[3][0].value = accountTag;
-        updateFormInputs[4][0].value = accountId;
+        ){
+        updateFormInputs[0].value = accountFirstName;
+        updateFormInputs[1].value = accountLastName;
+        updateFormInputs[2].value = accountImageSrc;
+        updateFormInputs[3].value = accountTag;
+        updateFormInputs[4].value = accountId;
+
     }
 
     private handleFilterByTag(valueToSearch: string) {
-        const filteredAccounts = Account.accounts.filter(account => {
-            return account.tag === valueToSearch;
-        });
+        const filteredAccounts = Account.filterAccountsByTag(valueToSearch);
 
         this.account.setFilteredAccounts(filteredAccounts);
         this.refreshDom();
     }
 
     private handleFilterByInput(valueToSearch: string) {
-        const filteredAccounts = Account.accounts.filter(account => {
-            const { firstName, lastName, tag } = account;
-
-            return firstName.includes(valueToSearch) || 
-            lastName.includes(valueToSearch) ||
-            tag.includes(valueToSearch);
-        });
+        const filteredAccounts = Account.filterAccountsByInput(valueToSearch);
 
         this.account.setFilteredAccounts(filteredAccounts);
         this.refreshDom();

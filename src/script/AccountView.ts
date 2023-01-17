@@ -8,15 +8,15 @@ export default class AccountView extends Account {
         const [updateButton, deleteButton] = this.domManipulator.createButtons(
             {
                 innerHtml: 'Edit',
-                className: 'account__update-button'
+                className: 'js-account-edit-button'
             },
             {
                 innerHtml: 'Delete',
-                className: 'account__delete-button'
+                className: 'js-account-delete-button'
             }
         );
 
-        const listItems = this.createListItems('account__list-item');
+        const listItems = this.createListItems('js-account-list-item');
 
         this.domManipulator.appendActionButtons<HTMLUListElement>(listItems, updateButton, deleteButton);
         this.addAccountToDom(listItems);
@@ -24,7 +24,7 @@ export default class AccountView extends Account {
 
     public hideUpdateForm() {
         const updateForm = this.domManipulator.getElementByClassName('js-update-form') as HTMLFormElement;
-        updateForm.style.display = 'none';
+        this.domManipulator.addClassName(updateForm, 'hide');
     }
 
     private decideAccountsToDisplay() {
@@ -46,17 +46,19 @@ export default class AccountView extends Account {
 
         const listItems = this.accountsToDisplay.map(account => {
             const [listItem, paragraph, span] = this.domManipulator.createElements<HTMLElement>('li', 'p', 'span');
-            span.style.display = 'none';
+
+            this.domManipulator.addClassName(span, 'js-account-tag', 'hide');
+            this.domManipulator.addClassName(paragraph, 'js-account-fullname');
+            this.domManipulator.addClassName(listItem, className);
 
             const fullName = this.getFullName(account.firstName, account.lastName);
             
             const currentImage = this.domManipulator.createImgElement({
                 src: account.avatar,
                 alt: 'account avatar',
-                className: 'account__avatar'
+                className: 'js-account-avatar'
             });
 
-            this.domManipulator.addClassName(listItem, className);
             this.domManipulator.appendInnerHtml(paragraph, fullName);
             this.domManipulator.appendInnerHtml(span, account.tag, ' ', account.id);
             this.domManipulator.appendInnerHtml<HTMLImageElement | HTMLParagraphElement | HTMLElement>(

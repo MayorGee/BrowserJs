@@ -1,5 +1,5 @@
-.account {
-    &__avatar {
+.js-account {
+    &-avatar {
         @include size(20rem, 20rem);
 
         display: block;
@@ -8,7 +8,7 @@
         border-radius: 50%;
     }
 
-    &__update-button {
+    &-edit-button {
         margin-right: 1.5rem;
         padding: 0.5rem 1rem;
 
@@ -21,7 +21,7 @@
         border-radius: 1rem;
     }
 
-    &__delete-button {
+    &-delete-button {
         padding: 0.5rem 1rem;
 
         font-weight: bold;

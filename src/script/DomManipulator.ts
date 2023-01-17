@@ -24,7 +24,6 @@ export default class DomManipulator {
         return buttons;       
     }
 
-
     public appendActionButtons<T extends HTMLElement>(elementItems: T[], ...actionButtons: HTMLButtonElement[]) {
         elementItems.forEach(elementItem => {
             this.appendElements<HTMLButtonElement>(elementItem, actionButtons);
@@ -57,8 +56,12 @@ export default class DomManipulator {
         });
     }
 
-    public addClassName(element: HTMLElement, className: string) {
-        element.classList.add(className);
+    public addClassName(element: HTMLElement, ...classNames: string[]) {
+        classNames.forEach(className => element.classList.add(className));
+    }
+
+    public removeClassName(element: HTMLElement, className: string) {
+        element.classList.remove(className);
     }
 
     public appendInnerHtml<T>(element: HTMLElement, ...loneChildrenNode: (string | T)[]) {
