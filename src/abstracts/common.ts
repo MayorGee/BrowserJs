@@ -16,3 +16,5 @@ export interface ImageAttributes {
     alt: string,
     className: string
 }
+
+export const hide = 'hide';

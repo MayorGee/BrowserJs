@@ -4,15 +4,12 @@ import DomManipulator from './DomManipulator.js';
 import LocalStorage from './LocalStorage.js';
 
 export default class Account {
-    public static accounts: IAccount[] = [];
-    protected static filteredAccounts: IAccount[] = [];
-
+    static accounts: IAccount[] = [];
+    static filteredAccounts: IAccount[] = [];
     protected domManipulator;
-    public static accountList: HTMLUListElement;
 
     constructor() {
         this.domManipulator = new DomManipulator();
-        Account.accountList = this.domManipulator.getElementByClassName('js-account-list') as HTMLUListElement;
     }
 
     public addNewAccount(newAccount: IAccount) {

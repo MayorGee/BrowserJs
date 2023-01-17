@@ -1,8 +1,14 @@
-import { IAccount } from '../abstracts/common.js';
+import { hide, IAccount } from '../abstracts/common.js';
 import Account from './Account.js';
 
 export default class AccountView extends Account {
     protected accountsToDisplay: IAccount[] = [];
+    static accountList: HTMLUListElement;
+
+    constructor() {
+        super();
+        AccountView.accountList = this.domManipulator.getElementByClassName('js-account-list') as HTMLUListElement;
+    }
 
     public makeAccountsList() { 
         const [updateButton, deleteButton] = this.domManipulator.createButtons(
@@ -24,7 +30,7 @@ export default class AccountView extends Account {
 
     public hideUpdateForm() {
         const updateForm = this.domManipulator.getElementByClassName('js-update-form') as HTMLFormElement;
-        this.domManipulator.addClassName(updateForm, 'hide');
+        this.domManipulator.addClassName(updateForm, hide);
     }
 
     private decideAccountsToDisplay() {
@@ -34,11 +40,11 @@ export default class AccountView extends Account {
     }
 
     private addAccountToDom(listItems: HTMLUListElement[]) {
-        this.domManipulator.appendElements(Account.accountList, listItems);
+        this.domManipulator.appendElements(AccountView.accountList, listItems);
     }
 
     public clearAccountList() {
-        Account.accountList.innerHTML = '';
+        AccountView.accountList.innerHTML = '';
     }
 
     private createListItems(className: string): HTMLUListElement[] {
@@ -47,7 +53,7 @@ export default class AccountView extends Account {
         const listItems = this.accountsToDisplay.map(account => {
             const [listItem, paragraph, span] = this.domManipulator.createElements<HTMLElement>('li', 'p', 'span');
 
-            this.domManipulator.addClassName(span, 'js-account-tag', 'hide');
+            this.domManipulator.addClassName(span, 'js-account-tag', hide);
             this.domManipulator.addClassName(paragraph, 'js-account-fullname');
             this.domManipulator.addClassName(listItem, className);
 

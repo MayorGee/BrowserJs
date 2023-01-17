@@ -1,4 +1,4 @@
-import { IAccount } from '../abstracts/common.js';
+import { hide, IAccount } from '../abstracts/common.js';
 import Account from './Account.js';
 import AccountView from './AccountView.js';
 import DomManipulator from './DomManipulator.js';
@@ -35,18 +35,18 @@ export default class EventHandler {
             this.handleFilterByTag(valueToSearch);
         });
 
-        Account.accountList.addEventListener('click', (ev) => {
+        AccountView.accountList.addEventListener('click', (ev) => {
             const eventTarget = (ev.target as HTMLElement);
 
             if(eventTarget.className === 'js-account-edit-button') {
-                this.domManipulator.removeClassName(updateForm, 'hide');
-                const accountToUpdate = eventTarget.closest('ul') as HTMLUListElement;
+                this.domManipulator.removeClassName(updateForm, hide);
+                const accountToUpdate = eventTarget.closest('.js-account-list-item') as HTMLUListElement;
 
                 this.handleAccountUpdate(accountToUpdate, updateForm);
             }
 
             if(eventTarget.className === 'js-account-delete-button') {
-                this.domManipulator.dropElement(eventTarget.closest('ul'));
+                this.domManipulator.dropElement(eventTarget.closest('.js-account-list-item'));
             }
         });
 
@@ -61,7 +61,7 @@ export default class EventHandler {
         const [accountFirstName, accountLastName] = (accountToUpdate.querySelector('.js-account-fullname') as HTMLParagraphElement).innerText.split(' ');
         const [accountTag, accountId] = (accountToUpdate.querySelector('.js-account-tag') as HTMLSpanElement).innerText.split(' ');
 
-        const updateFormInputTags = updateForm.getElementsByClassName('main-input') as unknown as HTMLInputElement[];
+        const updateFormInputTags = updateForm.getElementsByClassName('js-main-input') as unknown as HTMLInputElement[];
 
         this.updateFormInputs(updateFormInputTags, accountFirstName, accountLastName, accountImageSrc, accountTag, accountId);
     }
