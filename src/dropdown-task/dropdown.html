@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <Link href="./dropdown.css" rel="stylesheet" type="text/css" />
+            <title>Document</title>
+        </head>
+        
+        <body>
+            <ul class="dropdown" id="dropdown-tree">
+                <li class="dropdown__beverage">
+                    <span>Coffee</span>
+                    <ul class="dropdown__nested-list">
+                        <li class="">Espresso</li>
+                        <li class="">Latte</li>
+                        <li class="">Black Cofffee</li>
+                        <li class="">
+                            <span>Americano</span>
+                            <ul class="dropdown__nested-list">
+                                <li>Iced Americano</li>
+                                <li>Caffe Crema</li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <span>Capuccino</span>
+                            <ul class="dropdown__nested-list">
+                                <li class="">Cappucino Freddo</li>
+                                <li class="">Cappucino Chiaro</li>
+                                <li class="">Cappucino Scurro</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown__beverage">
+                    <span>Tea</span>
+                    <ul class="dropdown__nested-list">
+                        <li class="">
+                            <span>Black tea</span>
+                            <ul class="dropdown__nested-list">
+                                <li>Ceylon Tea</li>
+                                <li>Chai Kee Mun Tea</li>
+                                <li>Assam Black Tea</li>
+                                <li>Darjeeling Tea</li>
+                            </ul>
+                        </li>
+                        <li class="">Green tea</li>
+                        <li class="">White tea</li>
+                        <li class="">Oolong tea</li>
+                    </ul>
+                </li>
+                <li class="dropd__beverage">
+                    <span>Milk</span>
+                    <ul class="dropdown__nested-list">
+                        <li class="">Whole Milk</li>
+                        <li class="">Oat Milk</li>
+                        <li class="">Cashew Milk</li>
+                        <li class="">Butter Milk</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <script  type="module" src="./dropdown.js"></script>
+        </body>
+    </html>

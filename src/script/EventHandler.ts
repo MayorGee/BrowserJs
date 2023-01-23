@@ -79,7 +79,6 @@ export default class EventHandler {
         updateFormInputs[2].value = accountImageSrc;
         updateFormInputs[3].value = accountTag;
         updateFormInputs[4].value = accountId;
-
     }
 
     private handleFilterByTag(valueToSearch: string) {
@@ -117,7 +116,7 @@ export default class EventHandler {
 
     private refreshDom() {
         this.accountView.clearAccountList();
-        this.accountView.makeAccountsList();
+        this.accountView.makeAccountList();
     }
 
     private getFormData(form: HTMLFormElement): IAccount {

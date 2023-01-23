@@ -30,6 +30,11 @@ function html() {
         .pipe(dest('dist/'));
 }
 
+function liquid() {
+    return src('./src/**/*.liquid')
+        .pipe(dest('dist/'));
+}
+
 function icon() {
     return src('./src/icons/*.svg')
         .pipe(dest('dist/icons'));
@@ -52,6 +57,7 @@ function clear() {
 
 function serve() {
     watch('./src/**/**.html', series(html)).on('change', sync.reload);
+    watch('./src/**/**.liquid', series(liquid)).on('change', sync.reload);
     watch('./src/icons/**.svg', series(icon)).on('change', sync.reload);
     watch('./src/scss/**.scss', series(scss)).on('change', sync.reload);
     watch('./src/**/**.js', series(script)).on('change', sync.reload);
@@ -70,6 +76,7 @@ export const watchNode = parallel(
     series(
         clear, 
         html,
+        liquid,
         icon,  
         scss,
         script,

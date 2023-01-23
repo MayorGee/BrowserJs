@@ -48,10 +48,6 @@ export default class Account {
         return { id, firstName, lastName, avatar, tag };
     }
 
-    public getFullName(name: string, surname: string): string {
-        return name + ' ' + surname;
-    }
-
     public updateAccount(updatedAccount: IAccount) {
         const accountIndex = Account.accounts.findIndex(account => account.id === +updatedAccount.id);
         Account.accounts[accountIndex] = updatedAccount;
