@@ -2,22 +2,22 @@
     {% assign fullName = account.firstName | append: ' ' | append:  account.lastName %}
     {% assign tagAndId = account.tag | append: ' ' | append: account.id %}
     
-    <li class="js-account-list-item">
+    <li class="account__list-item js-account-list-item">
         <img 
-            src={{account.avatar}}
+            src="{{account.avatar}}"
             alt="account avatar"
-            class="js-account-avatar"
+            class="account__avatar js-account-avatar"
         />
-        <p class="js-account-fullname">
+        <p class="account__fullname js-account-fullname">
             {{ fullName }}
         </p>
 
-        <span class="js-account-tag hide">{{ tagAndId }}</span>
+        <span class="account __tag js-account-tag hide">{{ tagAndId }}</span>
 
-        <button class="js-account-edit-button">
+        <button class="account__edit-button js-account-edit-button">
             Edit
         </button>
-        <button class="js-account-delete-button">
+        <button class="account__delete-button js-account-delete-button">
             Delete
         </button>
     </li>
