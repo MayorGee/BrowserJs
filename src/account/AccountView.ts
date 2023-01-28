@@ -1,25 +1,25 @@
 import Liquid  from '../liquid.js';
-import Account from './Account.js';
+import AccountModel from './AccountModel.js';
 
-export default class AccountView extends Account {
+export default class AccountModelView extends AccountModel {
     static accountList: HTMLUListElement;
 
     constructor() {
         super();
-        AccountView.accountList = this.domManipulator.getElementByClassName('js-account-list') as HTMLUListElement;
+        AccountModelView.accountList = this.domManipulator.getElementByClassName('js-account-list') as HTMLUListElement;
     }
 
-    public async makeAccountList(accountsFilter = '') { 
-        const listItems = await Liquid.renderTemplate('liquid/accounts.liquid', Account.getAccounts(accountsFilter) );
+    public async makeAccountModelList(accountsFilter = '') { 
+        const listItems = await Liquid.renderTemplate('liquid/accounts.liquid', AccountModel.getAccounts(accountsFilter) );
         
-        this.addAccountsToDom(listItems);
+        this.addAccountModelsToDom(listItems);
     }
 
-    private addAccountsToDom(listItems: HTMLUListElement[]) {
-        this.domManipulator.appendInnerHtml(AccountView.accountList, listItems);
+    private addAccountModelsToDom(listItems: HTMLUListElement[]) {
+        this.domManipulator.appendInnerHtml(AccountModelView.accountList, listItems);
     }
 
-    public clearAccountList() {
-        AccountView.accountList.innerHTML = '';
+    public clearAccountModelList() {
+        AccountModelView.accountList.innerHTML = '';
     }
 }

@@ -1,16 +1,16 @@
-import { IAccount } from './abstracts/common.js';
+import { Account } from './abstracts/common.js';
 
 export default class LocalStorage {
     static accountsKey = 'accounts';
 
-    static setAccounts(accounts: IAccount[]) {
+    static setAccounts(accounts: Account[]) {
         localStorage.setItem(this.accountsKey, JSON.stringify(accounts));
     }
 
     static getAccounts() {
         const accounts = localStorage.getItem(this.accountsKey);
 
-        if(!accounts) {
+        if (!accounts) {
             return null;
         }
 

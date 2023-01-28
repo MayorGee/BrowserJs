@@ -1,15 +1,13 @@
-import { hide, IAccount } from '../abstracts/common.js';
-import Account from '../account/Account.js';
+import { hide, Account } from '../abstracts/common.js';
+import AccountModel from '../account/AccountModel.js';
 import AccountView from '../account/AccountView.js';
 import DomManipulator from '../dom/DomManipulator.js';
 
 export default class EventHandler {
     protected domManipulator;
-    protected account;
     protected accountView;
 
     constructor() {
-        this.account = new Account();
         this.domManipulator = new DomManipulator();
         this.accountView = new AccountView();
     }
@@ -38,18 +36,18 @@ export default class EventHandler {
         AccountView.accountList.addEventListener('click', (ev) => {
             const eventTarget = (ev.target as HTMLElement);
 
-            if(eventTarget.className.includes('js-account-edit-button')) {
+            if (eventTarget.className.includes('js-account-edit-button')) {
                 this.domManipulator.removeClassName(updateForm, hide);
                 const accountToUpdate = eventTarget.closest('.js-account-list-item') as HTMLUListElement;
 
-                this.handleAccountUpdate(accountToUpdate, updateForm);
+                this.handleAccountModelUpdate(accountToUpdate, updateForm);
             }
 
-            if(eventTarget.className.includes('js-account-delete-button')) {
+            if (eventTarget.className.includes('js-account-delete-button')) {
                 const accountToDelete = eventTarget.closest('.js-account-list-item') as HTMLUListElement;
                 this.domManipulator.dropElement(accountToDelete);
 
-                this.handleAccountDelete(accountToDelete);
+                this.handleAccountModelDelete(accountToDelete);
             }
         });
 
@@ -59,13 +57,14 @@ export default class EventHandler {
         });
     }
 
-    private handleAccountDelete(accountToDelete: HTMLUListElement) {
-        const accountId = (accountToDelete.querySelector('.js-account-tag') as HTMLSpanElement).innerText.split(' ')[1];
+    private handleAccountModelDelete(accountToDelete: HTMLUListElement) {
+        const hiddenSpan = (accountToDelete.querySelector('.js-account-tag') as HTMLSpanElement);
+        const [, accountId] = hiddenSpan.innerText.split(' ');
 
-        this.account.deleteAccount(+accountId);
+        AccountModel.deleteAccount(+accountId);
     }
 
-    private handleAccountUpdate(accountToUpdate: HTMLUListElement, updateForm: HTMLFormElement) {
+    private handleAccountModelUpdate(accountToUpdate: HTMLUListElement, updateForm: HTMLFormElement) {
         const accountImageSrc = (accountToUpdate.querySelector('.js-account-avatar') as HTMLImageElement).currentSrc;
         const [accountFirstName, accountLastName] = (accountToUpdate.querySelector('.js-account-fullname') as HTMLParagraphElement).innerText.split(' ');
         const [accountTag, accountId] = (accountToUpdate.querySelector('.js-account-tag') as HTMLSpanElement).innerText.split(' ');
@@ -73,7 +72,7 @@ export default class EventHandler {
         const updateFormInputTags = updateForm.getElementsByClassName('js-main-input') as unknown as HTMLInputElement[];
 
         this.updateFormInputs(updateFormInputTags, accountFirstName, accountLastName, accountImageSrc, accountTag, accountId);
-        this.account.updateAccount({
+        AccountModel.updateAccountModel({
             id: +accountId,
             firstName: accountFirstName,
             lastName: accountLastName,
@@ -107,9 +106,9 @@ export default class EventHandler {
 
     private handleAddFormSubmit(form: HTMLFormElement) {
         const addFormData = this.getFormData(form);
-        const newAccount = this.account.createNewAccount(addFormData);
+        const newAccount = AccountModel.createNewAccount(addFormData);
 
-        this.account.addNewAccount(newAccount);
+        AccountModel.addNewAccount(newAccount);
 
         this.refreshDom();
         form.reset();
@@ -118,19 +117,19 @@ export default class EventHandler {
     private handleUpdateFormSubmit(form: HTMLFormElement) {
         const editFormData = this.getFormData(form);
 
-        this.account.updateAccount(editFormData);
+        AccountModel.updateAccountModel(editFormData);
         
         this.refreshDom();
         form.reset();
     }
 
     private refreshDom(filter = '') {
-        this.accountView.clearAccountList();
-        this.accountView.makeAccountList(filter);
+        this.accountView.clearAccountModelList();
+        this.accountView.makeAccountModelList(filter);
     }
 
-    private getFormData(form: HTMLFormElement): IAccount {
-        const formData = Object.fromEntries(new FormData(form)) as unknown as IAccount;
+    private getFormData(form: HTMLFormElement): Account {
+        const formData = Object.fromEntries(new FormData(form)) as unknown as Account;
 
         return formData;
     }

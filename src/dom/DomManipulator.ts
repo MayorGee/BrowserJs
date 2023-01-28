@@ -1,8 +1,6 @@
 export default class DomManipulator {
     public getElementByClassName(className: string): HTMLElement | null {
-        const element = document.querySelector<HTMLElement>(`.${className}`);
-
-        return element;
+        return document.querySelector<HTMLElement>(`.${className}`);
     }
 
     public removeClassName(element: HTMLElement, className: string) {
