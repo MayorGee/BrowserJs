@@ -1,7 +1,7 @@
 import { hide, IAccount } from '../abstracts/common.js';
-import Account from './Account.js';
-import AccountView from './AccountView.js';
-import DomManipulator from './DomManipulator.js';
+import Account from '../account/Account.js';
+import AccountView from '../account/AccountView.js';
+import DomManipulator from '../dom/DomManipulator.js';
 
 export default class EventHandler {
     protected domManipulator;
@@ -38,15 +38,18 @@ export default class EventHandler {
         AccountView.accountList.addEventListener('click', (ev) => {
             const eventTarget = (ev.target as HTMLElement);
 
-            if(eventTarget.className === 'js-account-edit-button') {
+            if(eventTarget.className.includes('js-account-edit-button')) {
                 this.domManipulator.removeClassName(updateForm, hide);
                 const accountToUpdate = eventTarget.closest('.js-account-list-item') as HTMLUListElement;
 
                 this.handleAccountUpdate(accountToUpdate, updateForm);
             }
 
-            if(eventTarget.className === 'js-account-delete-button') {
-                this.domManipulator.dropElement(eventTarget.closest('.js-account-list-item'));
+            if(eventTarget.className.includes('js-account-delete-button')) {
+                const accountToDelete = eventTarget.closest('.js-account-list-item') as HTMLUListElement;
+                this.domManipulator.dropElement(accountToDelete);
+
+                this.handleAccountDelete(accountToDelete);
             }
         });
 
@@ -54,6 +57,12 @@ export default class EventHandler {
             ev.preventDefault();
             this.handleUpdateFormSubmit(updateForm);
         });
+    }
+
+    private handleAccountDelete(accountToDelete: HTMLUListElement) {
+        const accountId = (accountToDelete.querySelector('.js-account-tag') as HTMLSpanElement).innerText.split(' ')[1];
+
+        this.account.deleteAccount(+accountId);
     }
 
     private handleAccountUpdate(accountToUpdate: HTMLUListElement, updateForm: HTMLFormElement) {
@@ -64,6 +73,13 @@ export default class EventHandler {
         const updateFormInputTags = updateForm.getElementsByClassName('js-main-input') as unknown as HTMLInputElement[];
 
         this.updateFormInputs(updateFormInputTags, accountFirstName, accountLastName, accountImageSrc, accountTag, accountId);
+        this.account.updateAccount({
+            id: +accountId,
+            firstName: accountFirstName,
+            lastName: accountLastName,
+            avatar: accountImageSrc,
+            tag: accountTag
+        });
     }
 
     private updateFormInputs(
@@ -81,18 +97,12 @@ export default class EventHandler {
         updateFormInputs[4].value = accountId;
     }
 
-    private handleFilterByTag(valueToSearch: string) {
-        const filteredAccounts = Account.filterAccountsByTag(valueToSearch);
-
-        this.account.setFilteredAccounts(filteredAccounts);
-        this.refreshDom();
+    private handleFilterByTag(tag: string) {
+        this.refreshDom(tag);
     }
 
-    private handleFilterByInput(valueToSearch: string) {
-        const filteredAccounts = Account.filterAccountsByInput(valueToSearch);
-
-        this.account.setFilteredAccounts(filteredAccounts);
-        this.refreshDom();
+    private handleFilterByInput(input: string) {
+        this.refreshDom(input);
     }
 
     private handleAddFormSubmit(form: HTMLFormElement) {
@@ -114,9 +124,9 @@ export default class EventHandler {
         form.reset();
     }
 
-    private refreshDom() {
+    private refreshDom(filter = '') {
         this.accountView.clearAccountList();
-        this.accountView.makeAccountList();
+        this.accountView.makeAccountList(filter);
     }
 
     private getFormData(form: HTMLFormElement): IAccount {
