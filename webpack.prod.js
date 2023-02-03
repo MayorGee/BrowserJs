@@ -1,65 +1,68 @@
 const path = require('path');
-const buildPath = path.resolve(__dirname, 'dist');
 
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin'); //installed via npm
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
+const buildPath = path.resolve(__dirname, 'dist');
+
 module.exports = {
-    devtool: 'eval-cheap-module-source-map',
+    devtool: 'source-map',
     entry: './src/index.ts',
     output: {
-        filename: 'index.[hash:20].js',
+        filename: '[name].[hash:20].js',
         path: buildPath
+    },
+    node: {
+        fs: 'empty'
     },
     module: {
         rules: [
             {
                 test: /\.ts$/,
-                loader: 'ts-loader',
                 exclude: /node_modules/,
-                include: [path.resolve(__dirname, 'src')]
-            },
-            {
-                test: /\.json$/,
-                type: 'javascript/auto',
-                loader: 'custom-json-loader'
+                loader: 'ts-loader'
             },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
+
                 options: {
                     presets: ['env']
                 }
             },
             {
-                test: /\.(scss|css)$/,
+                test: /\.(scss|css|sass)$/,
                 use: [
                     {
-                        // creates style nodes from JS strings
-                        loader: "style-loader",
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        // translates CSS into CommonJS
+                        loader: 'css-loader',
                         options: {
                             sourceMap: true
                         }
                     },
                     {
-                        // translates CSS into CommonJS
-                        loader: "css-loader",
+                        // Runs compiled CSS through postcss for vendor prefixing
+                        loader: 'postcss-loader',
                         options: {
                             sourceMap: true
                         }
                     },
                     {
                         // compiles Sass to CSS
-                        loader: "sass-loader",
+                        loader: 'sass-loader',
                         options: {
                             outputStyle: 'expanded',
                             sourceMap: true,
                             sourceMapContents: true
                         }
                     }
-                    // Please note we are not running postcss here
                 ]
             },
             {
@@ -69,13 +72,13 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            // On development we want to see where the file is coming from, hence we preserve the [path]
-                            name: '[path][name].[ext]?hash=[hash:20]',
+                            name: '[name].[hash:20].[ext]',
                             limit: 8192
                         }
                     }
                 ]
-            },
+            }
+            ,
             {
                 // Load all icons
                 test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
@@ -84,53 +87,47 @@ module.exports = {
                         loader: 'file-loader',
                     }
                 ]
-            },
-            {
-                test: /\.(scss|css|sass)$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            outputStyle: 'expanded',
-                            sourceMap: true,
-                            sourceMapContents: true
-                        }
-                    }
-                ]
             }
         ]
-    },  
-    devServer: {
-        port: 8888,
-        contentBase: buildPath
-    },
-    resolve: {
-        fallback: {
-          fs: false
-        }
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
-            inject: true
+            template: './index.html',
+            // Inject the js bundle at the end of the body of the given template
+            inject: 'body',
+        }),
+        new CleanWebpackPlugin(buildPath),
+        new FaviconsWebpackPlugin({
+            // Your source logo
+            logo: './src/assets/icon.png',
+            // The prefix for all image files (might be a folder or a name)
+            prefix: 'icons-[hash]/',
+            // Generate a cache file with control hashes and
+            // don't rebuild the favicons until those hashes change
+            persistentCache: true,
+            // Inject the html into the html-webpack-plugin
+            inject: true,
+            // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
+            background: '#fff',
+            // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
+            title: '{{projectName}}',
+
+            // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+            icons: {
+                android: true,
+                appleIcon: true,
+                appleStartup: true,
+                coast: false,
+                favicons: true,
+                firefox: true,
+                opengraph: false,
+                twitter: false,
+                yandex: false,
+                windows: false
+            }
         }),
         new MiniCssExtractPlugin({
-            filename: 'styles.css'
+            filename: 'styles.[contenthash].css'
         }),
         new OptimizeCssAssetsPlugin({
             cssProcessor: require('cssnano'),
@@ -146,4 +143,4 @@ module.exports = {
             canPrint: true
         })
     ]
-}
+};
