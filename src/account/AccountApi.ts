@@ -1,5 +1,5 @@
-import FetchClient from '../api/FetchClient.js';
-import LocalStorage from '../LocalStorage.js';
+import FetchClient from '../api/FetchClient';
+import LocalStorage from '../LocalStorage';
 import AccountModel from './AccountModel';
 
 export default class AccountApi {

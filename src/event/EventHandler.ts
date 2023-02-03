@@ -1,7 +1,7 @@
-import { hide, Account } from '../abstracts/common.js';
-import AccountModel from '../account/AccountModel.js';
-import AccountView from '../account/AccountView.js';
-import DomManipulator from '../dom/DomManipulator.js';
+import { hide, Account } from '../abstracts/common';
+import AccountModel from '../account/AccountModel';
+import AccountView from '../account/AccountView';
+import DomManipulator from '../dom/DomManipulator';
 
 export default class EventHandler {
     protected domManipulator;
@@ -129,6 +129,7 @@ export default class EventHandler {
     }
 
     private getFormData(form: HTMLFormElement): Account {
+        //@ts-ignore
         const formData = Object.fromEntries(new FormData(form)) as unknown as Account;
 
         return formData;

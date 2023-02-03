@@ -1,5 +1,5 @@
-import Liquid  from '../liquid.js';
-import AccountModel from './AccountModel.js';
+import Liquid  from '../liquid';
+import AccountModel from './AccountModel';
 
 export default class AccountModelView extends AccountModel {
     static accountList: HTMLUListElement;

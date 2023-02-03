@@ -1,4 +1,4 @@
-import { Account } from './abstracts/common.js';
+import { Account } from './abstracts/common';
 
 export default class LocalStorage {
     static accountsKey = 'accounts';

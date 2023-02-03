@@ -1,7 +1,7 @@
-import Liquid from './liquid.js';
-import AccountView from './account/AccountView.js';
-import EventHandler from './event/EventHandler.js';
-import AccountApi from './account/AccountApi.js';
+import Liquid from './liquid';
+import AccountView from './account/AccountView';
+import EventHandler from './event/EventHandler';
+import AccountApi from './account/AccountApi';
 
 export default class App {
     async start() {

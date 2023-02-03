@@ -1,7 +1,7 @@
-import { Account } from '../abstracts/common.js';
-import { AccountDbo } from '../abstracts/dbo/AccountDbo.js';
-import DomManipulator from '../dom/DomManipulator.js';
-import LocalStorage from '../LocalStorage.js';
+import { Account } from '../abstracts/common';
+import { AccountDbo } from '../abstracts/dbo/AccountDbo';
+import DomManipulator from '../dom/DomManipulator';
+import LocalStorage from '../LocalStorage';
 
 export default class AccountModel {
     public static accounts: Account[] = [];
