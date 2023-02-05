@@ -1,11 +1,9 @@
-export default class Liquid {
-    // @ts-ignore
-    static engine;
+import { Liquid } from 'liquidjs';
+
+export default class LiquidClient {
+    static engine: Liquid;
 
     static initLiquid() {
-        // @ts-ignore
-        const Liquid = window.liquidjs.Liquid;
-
         this.engine = new Liquid({
             extname: '.html',
             cache: true

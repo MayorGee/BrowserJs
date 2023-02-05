@@ -5,12 +5,13 @@ const CleanWebpackPlugin = require('clean-webpack-plugin'); //installed via npm
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const buildPath = path.resolve(__dirname, 'dist');
 
 module.exports = {
     devtool: 'source-map',
-    entry: './src/index.ts',
+    entry: path.resolve(__dirname, 'src/index.ts'),
     output: {
         filename: '[name].[hash:20].js',
         path: buildPath
@@ -70,7 +71,7 @@ module.exports = {
             },
             {
                 // Load all images as base64 encoding if they are smaller than 8192 bytes
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpe?g|gif)$/i,
                 use: [
                     {
                         loader: 'url-loader',
@@ -80,16 +81,19 @@ module.exports = {
                         }
                     }
                 ]
-            }
-            ,
+            },
             {
                 // Load all icons
-                test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                    }
-                ]
+                test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/i,
+                use: [ 
+                    { 
+                        loader: 'file-loader', 
+                        options: { 
+                            name: '[name].[ext]', 
+                            publicPath: 'assets/images/' 
+                        } 
+                   } 
+                ]                
             }
         ]
     },
@@ -100,6 +104,18 @@ module.exports = {
             inject: 'body',
         }),
         new CleanWebpackPlugin(buildPath),
+        new CopyWebpackPlugin(
+            [
+                {
+                    from: './src/icons',
+                    to: 'assets/icons'
+                },
+                {
+                    from: './src/liquid',
+                    to: 'liquid/accounts.liquid'
+                }
+            ]
+        ),
         new FaviconsWebpackPlugin({
             // Your source logo
             logo: './src/assets/icon.png',
@@ -117,12 +133,12 @@ module.exports = {
 
             // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
             icons: {
-                android: true,
-                appleIcon: true,
-                appleStartup: true,
+                android: false,
+                appleIcon: false,
+                appleStartup: false,
                 coast: false,
-                favicons: true,
-                firefox: true,
+                favicons: false,
+                firefox: false,
                 opengraph: false,
                 twitter: false,
                 yandex: false,

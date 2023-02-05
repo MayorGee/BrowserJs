@@ -125,7 +125,7 @@ export default class EventHandler {
 
     private refreshDom(filter = '') {
         this.accountView.clearAccountModelList();
-        this.accountView.makeAccountModelList(filter);
+        this.accountView.makeAccountList(filter);
     }
 
     private getFormData(form: HTMLFormElement): Account {

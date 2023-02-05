@@ -4,10 +4,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     devtool: 'eval-cheap-module-source-map',
-    entry: './src/index.ts',
+    entry: path.resolve(__dirname, 'src/index.ts'),
     devServer: {
-        port: 8080,
-        contentBase: path.join(__dirname, "dist")
+        port: 3000,
+        contentBase: path.join(__dirname, "dist"),
+        disableHostCheck: true
     },
     node: {
         fs: 'empty'
@@ -55,11 +56,10 @@ module.exports = {
                     }
                     // Please note we are not running postcss here
                 ]
-            }
-            ,
+            },
             {
                 // Load all images as base64 encoding if they are smaller than 8192 bytes
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpe?g|gif)$/i,
                 use: [
                     {
                         loader: 'url-loader',
@@ -70,18 +70,24 @@ module.exports = {
                         }
                     }
                 ]
-            }
-            ,
+            },
             {
                 // Load all icons
-                test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                    }
+                test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/i,
+                use: [ 
+                    { 
+                        loader: 'file-loader', 
+                        options: { 
+                            name: '[name].[ext]', 
+                            publicPath: 'assets/icons/' 
+                        } 
+                    } 
                 ]
             }
         ],
+    },
+    resolve: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     plugins: [
         new HtmlWebpackPlugin({
